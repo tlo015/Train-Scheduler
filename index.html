@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Train Scheduler</title>
+</head>
+<body>
+    
+<!-- Title -->
+<div class="jumbotron">
+    <h1>Train Information</h1>
+    <p></p>
+</div>
+
+<!-- Target div for results -->
+<div class="container card">
+    <h6 class="card-header" id="masthead">
+        Train Scheduler 
+    </h6>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Train</th>
+                <th scope="col">Destination</th>
+                <th scope="col">Frequency (min)</th>
+                <th scope="col">Next Arrival</th>
+                <th scope="col">Minutes Away</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+
+
+<div class="container card">
+    <h6 class="card-header" id="masthead"> Add Train</h6>
+
+
+    <div class="card-body">
+        <h6>Train Name </h6>
+        <input type="text" id="name_box" class="form-control" value="">
+        <br>
+        <br>
+
+        <h6>Destination </h6>
+        <input type="text" id="role_box" class="form-control" value="">
+        <br>
+        <br>
+        <h6>FIrst Train Time (HHMM) </h6>
+        <input type="text" id="date_box" class="form-control" value="">
+        <br>
+        <br>
+        <h6>Frequency (min) </h6>
+        <input type="text" id="rate_box" class="form-control" value="">
+        <br>
+        <br>
+
+        <!-- Begin buttons -->
+        <button id="submit" type="button" class="btn btn-primary">Submit</button>
+
+
+
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/locale/af.js"></script>
+<script type="text/javascript" src="script.js"></script>
+</html>
