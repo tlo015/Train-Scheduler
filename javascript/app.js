@@ -12,56 +12,62 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-var name;
-var destination;
-var time;
-var frequency;
+// clear the info in text box so data is not generated multiple times
+function clear() {
+    $("#name_box").val("");
+    $("#destination_box").val("");
+    $("#time_box").val(""); 
+    $("#frequency_box").val("");    
+}
 
 //on click set the data to the firebase 
-$("#submit_button").on("click", function() {
-event.preventDefault(); 
+$("#submit").on("click", function() { 
     
     //variables
     var name = $("#name_box").val().trim();
     var destination = $("#destination_box").val().trim();
     var time = $("#time_box").val().trim(); 
     var frequency = $("#frequency_box").val().trim();
-    
-    console.log(name, destination, time, frequency);
-    
-    // store click extract the data as a single object to hold data, 
+    clear();
+
     // push data into the database upon clicking submit,
-    database.ref().set( {
+    database.ref().push( {
         name: name,
         destination: destination,
         time: time,
         frequency: frequency,
         dateAdded: firebase.database.ServerValue.TIMESTAMP
-    });
+    })
 });
+
 
 //Firebase 
 //on("child_added") to retreive employee data from database and display in the table 
-database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
+// .orderByChild("dateAdded").on
 
-    //display variables in table html
+database.ref().orderByChild("dateAdded").on("child_added", function (snapshot) {
+    
+    console.log(snapshot.val().name, snapshot.val().destination, snapshot.val().frequency, snapshot.val().time)
+    
     var newRow = $("<tr>");
-        newRow.append(
-            "<td>" + snapshot.val().name + "</td>"
-        ).append(
-            "<td>" + snapshot.val().destination + "</td>"
-        ).append(
-            "<td>" + snapshot.val().time + "</td>"
-        ).append(
-            "<td>" + snapshot.val().frequency + "</td>"
-        );
-        $("tbody").append(newRow);
-
-    // $("#name_box").text(snapshot.val().name)
-    // $("#destination_box").text(snapshot.val().destination)     
-    // $("#time_box").text(snapshot.val().time)    
-    // $("#frequency_box").text(snapshot.val().frequency)
-
-}, function (errorObject) {
-    console.log("Error handled: " + errorObject.code);
+    newRow.append(
+        "<td>" + snapshot.val().name + "</td>"
+    ).append(
+        "<td>" + snapshot.val().destination + "</td>"
+    ).append(
+        "<td>" + snapshot.val().frequency + "</td>"
+    ).append(
+        "<td>" + "next arrival" + "</td>"
+    ).append(
+        "<td>" + "minutes away" + "</td>"
+    );
+    $("tbody").append(newRow);
 });
+
+// Moments.js
+// H HH is 24hour time 
+// h hh with a(am) or A(pm) for 12 hour time 
+
+// }, function (errorObject) {
+//     console.log("Error handled: " + errorObject.code);
+// });
