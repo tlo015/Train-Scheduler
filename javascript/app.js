@@ -12,23 +12,23 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-// clear the info in text box so data is not generated multiple times
-function clear() {
-    $("#name_box").val("");
-    $("#destination_box").val("");
-    $("#time_box").val(""); 
-    $("#frequency_box").val("");    
-}
+// clear the info in text box
+// function clear() {
+//     $("#name_box").val("");
+//     $("#destination_box").val("");
+//     $("#time_box").val(""); 
+//     $("#frequency_box").val("");    
+// }
 
 //on click set the data to the firebase 
-$("#submit").on("click", function() { 
+$("#submit_button").on("click", function() { 
     
     //variables
     var name = $("#name_box").val().trim();
     var destination = $("#destination_box").val().trim();
     var time = $("#time_box").val().trim(); 
     var frequency = $("#frequency_box").val().trim();
-    clear();
+    console.log(name, destination, time, frequency);
 
     // push data into the database upon clicking submit,
     database.ref().push( {
@@ -42,31 +42,51 @@ $("#submit").on("click", function() {
 
 
 //Firebase 
-//on("child_added") to retreive employee data from database and display in the table 
-// .orderByChild("dateAdded").on
-
-database.ref().orderByChild("dateAdded").on("child_added", function (snapshot) {
-    
+//on("child_added") to retreive employee data from database and display in the table
+database.ref().orderByChild("dataAdded").on("child_added", function (snapshot) {
     console.log(snapshot.val().name, snapshot.val().destination, snapshot.val().frequency, snapshot.val().time)
     
-    var newRow = $("<tr>");
-    newRow.append(
-        "<td>" + snapshot.val().name + "</td>"
-    ).append(
-        "<td>" + snapshot.val().destination + "</td>"
-    ).append(
-        "<td>" + snapshot.val().frequency + "</td>"
-    ).append(
-        "<td>" + "next arrival" + "</td>"
-    ).append(
-        "<td>" + "minutes away" + "</td>"
-    );
-    $("tbody").append(newRow);
+    // Moments.js
+    // H HH is 24hour time 
+    // h hh with a(am) or A(pm) for 12 hour time 
+    //convert userinput into "hh:mm" 
+    var time = snapshot.val().time;
+    var frequency = snapshot.val().frequency;
+
+    var timeConversion = moment(time,"HH:mm").subtract(1, "years");
+    console.log("user time: ", timeConversion);
+
+    var currentTime = moment();
+    console.log("current time: ", moment(currentTime).format("hh:mm"));
+
+    var timeDiff = moment().diff(moment(timeConversion), "minutes");
+    console.log("time difference: ", timeDiff);
+
+    var remainder = timeDiff % frequency;
+    console.log("remainder: ", remainder);
+
+    var nextTrainMin = frequency - remainder;
+    console.log("minutes til train: ", nextTrainMin);
+
+    var nextTrainTime = moment().add(nextTrainMin, "minutes");
+    console.log("time of next train: ", moment(nextTrainTime).format("HH:mm"));
+
+        //displays in table on html
+        var newRow = $("<tr>");
+        newRow.append(
+            "<td>" + snapshot.val().name + "</td>"
+        ).append(
+            "<td>" + snapshot.val().destination + "</td>"
+        ).append(
+            "<td>" + snapshot.val().frequency + "</td>"
+        ).append(
+            "<td>" + moment(nextTrainTime).format("HH:mm") + "</td>"
+        ).append(
+            "<td>" + nextTrainMin + "</td>"
+        );
+        $("tbody").append(newRow);
 });
 
-// Moments.js
-// H HH is 24hour time 
-// h hh with a(am) or A(pm) for 12 hour time 
 
 // }, function (errorObject) {
 //     console.log("Error handled: " + errorObject.code);
