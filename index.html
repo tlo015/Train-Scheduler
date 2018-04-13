@@ -7,6 +7,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
     crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Train Scheduler</title>
 </head>
 
@@ -42,27 +43,26 @@
 </div>
 
 
-<div class="container card">
-    <h6 class="card-header" id="masthead"> Add Train</h6>
-
+<div class="container card" id="user-section">
+    <h6 class="card-header" id="section"> Add Train</h6>
 
     <div class="card-body">
         <h6>Train Name </h6>
         <input type="text" id="name_box" class="form-control" value="">
         <br>
-        <br>
+    
         <h6>Destination </h6>
         <input type="text" id="destination_box" class="form-control" value="">
         <br>
-        <br>
+ 
         <h6>First Train Time (HH:mm) </h6>
         <input type="text" id="time_box" class="form-control" value="">
         <br>
-        <br>
+  
         <h6>Frequency (min) </h6>
         <input type="text" id="frequency_box" class="form-control" value="">
         <br>
-        <br>
+   
 
         <!-- Begin buttons -->
         <button id="submit_button" type="button" class="btn btn-primary">Submit</button>
@@ -73,5 +73,5 @@
 
 <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
 <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-<script type="text/javascript" src="assets/javascript/app.js"></script>
+<script type="text/javascript" src="javascript/app.js"></script>
 </html>
